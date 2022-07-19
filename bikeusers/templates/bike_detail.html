@@ -1,0 +1,221 @@
+{%extends 'base.html'%}
+{%block body_block%}
+      
+    <section class="banner banner-secondary" id="top" style="background-image: url({{bike_detail.image.url}});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="banner-caption">
+                        <div class="line-dec"></div>
+                        <h2>{{bike_detail.bike_name}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="featured-places">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-6 col-xs-12">
+                    <div>
+                      <img src="{{bike_detail.image.url}}" alt="bike" class="img-responsive wc-image">
+                    </div>
+                    <br>
+                    <div class="row">
+
+                         {% for bike_img in bike_more_images %}
+
+                      <div class="col-sm-4 col-xs-6">
+                        <div class="form-group">
+                            <img src="{{bike_img.image.url}}" alt="" class="img-responsive">
+                        </div>
+                      </div>
+                        {%endfor%}
+
+
+
+
+
+
+
+
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-xs-12">
+                    <form action="#" method="post" class="form">
+                      <h2><small><del> </del></small><strong class="text-primary">₹{{bike_detail.bike_price}}/-</strong>
+                      </h2>
+
+
+                      <br> 
+
+                      <ul class="list-group list-group-flush">
+                       <li class="list-group-item">
+                            <div class="clearfix">
+                                 <span class="pull-left">OwnerType</span>
+
+                                 <strong class="pull-right">{{bike_detail.owner_type}}</strong>
+                            </div>
+                       </li>
+                           <li class="list-group-item">
+                            <div class="clearfix">
+                                 <span class="pull-left">Manufacturer</span>
+
+                                 <strong class="pull-right">{{bike_detail.bike_manufacturer}}</strong>
+                            </div>
+                       </li>
+
+
+
+                       <li class="list-group-item">
+                            <div class="clearfix">
+                                 <span class="pull-left"> Model Year</span>
+
+                                 <strong class="pull-right">{{bike_detail.bike_model}}</strong>
+                            </div>
+                       </li>
+
+
+
+                       <li class="list-group-item">
+                            <div class="clearfix">
+                                 <span class="pull-left">Engine Capacity</span>
+
+                                 <strong class="pull-right">{{bike_detail.bike_capacity}} cc</strong>
+                            </div>
+                       </li>
+
+
+
+
+                       <li class="list-group-item">
+                            <div class="clearfix">
+                                 <span class="pull-left">Total Kilometer</span>
+
+                                 <strong class="pull-right">{{bike_detail.bike_km}}</strong>
+                            </div>
+                       </li>
+
+                    </ul>
+
+                      <div class="accordions">
+                            <ul class="accordion">
+                                <li>
+                                    <a class="accordion-trigger">Vehicle Extras</a>
+                                    
+                                    <div class="accordion-content">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>ABS</p>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>Leather seats</p>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>Power Assisted Steering</p>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>Electric heated seats</p>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>New HU and AU</p>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <p>Xenon headlights</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="accordion-trigger">Vehicle Description</a>
+                                    <div class="accordion-content">
+                                        <p>{{bike_detail.bike_description}}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="accordion-trigger">Contact Details</a>
+
+                                    <div class="accordion-content">
+
+                                      <p>
+                                        <span>Name</span>
+
+                                        <br>
+
+                                        <strong>{{bike_detail.added_user.first_name}} {{bike_detail.added_user.last_name}}</strong>
+
+                                    </p>
+
+                                    <p>
+                                        <span>Phone</span>
+
+                                        <br>
+                                        
+                                        <strong>
+                                          <a href="tel:123-456-789">123-456-789</a>
+                                        </strong>
+                                    </p>
+
+                                    <p>
+                                        <span>Mobile phone</span>
+
+                                        <br>
+                                        
+                                        <strong>
+                                          <a href="tel:456789123">456789123</a>
+                                        </strong>
+                                    </p>
+
+                                    <p>
+
+                                        <span>Email</span>
+
+                                        <br>
+                                        
+                                        <strong>
+                                          <a href="mailto:{{bike_detail.added_user.email}}">{{bike_detail.added_user.email}}</a>
+                                        </strong>
+                                      </p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div>
+
+
+
+                             {%if bike_int_status%}
+                             {%for i in bike_int_status%}
+                                {%if i.status == "Interested" %}
+                                     <h4 class="text-success">you are already sent offer, {{i.owner.first_name}} will contact you soon.. </h4>
+                                {%elif i.status == "Rejected" %}
+                                 <h4 class="text-warning">Sorry....{{i.owner.first_name}} is not interested in this deal with you.</h4>
+                                  {%elif i.status == "Sold" %}
+                                        <h4 class="text-danger">This Bike is SOLD OUT</h4>
+                                {%endif%}
+                           {%endfor%}
+                                {%else%}
+                                 <h4 class="text-info">Are you Interested to Buy this?</h4>
+                                <a href="{%url 'make_offer' bike_detail.id%}"><button type="button" class="btn btn-warning">Make A Deal</button></a>
+
+                                {%endif%}
+
+                            </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{%endblock%}
